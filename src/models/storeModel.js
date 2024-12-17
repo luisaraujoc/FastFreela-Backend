@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
+const User = require("./userModel");
 
 // Modelo de loja
 // id, nome, email, telefone, FK de usuário
@@ -14,6 +15,10 @@ const Store = sequelize.define(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
     email: {
       type: DataTypes.STRING,

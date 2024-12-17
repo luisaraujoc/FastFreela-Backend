@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
 // Modelo de pessoa
-// id, nome, cpf/cnpj, dataDeNascimento, email, FK de usuário (pode ser nulo, pessoas podem comprar sem ter cadastro, mas para comprar o programa vai criar o objeto pessoa) (Pessoa tem usuario, usuario pertence a pessoa)
+// id, nome, nomeMae, cpfCnpj, dataNascimento, email
 const Person = sequelize.define(
   "Person",
   {
@@ -23,6 +23,21 @@ const Person = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      validate: {
+        isCpfCnpj(value) {
+          if (value.length === 11) {
+            if (!/^\d{11}$/.test(value)) {
+              throw new Error("CPF inválido");
+            }
+          } else if (value.length === 14) {
+            if (!/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/.test(value)) {
+              throw new Error("CNPJ inválido");
+            }
+          } else {
+            throw new Error("CPF/CNPJ inválido");
+          }
+        },
+      },
     },
     birthDate: {
       type: DataTypes.DATE,
@@ -38,6 +53,5 @@ const Person = sequelize.define(
     timestamps: true, // Adiciona createdAt e updatedAt
   }
 );
-
 
 module.exports = Person;

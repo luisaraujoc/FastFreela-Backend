@@ -1,11 +1,4 @@
 class PersonDTO {
-    // id
-    // Name
-    // motherName
-    // cpfCNPJ
-    // birthDate
-    // email
-
     constructor(id, name, motherName, cpfCnpj, birthDate, email) {
         this.id = id;
         this.name = name;

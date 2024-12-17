@@ -14,7 +14,17 @@ class PersonDAO {
 
   // createPerson
   async createPerson(data) {
-    return Person.create(data);
+    // return Person.create(data);
+    try {
+      return await Person.create(data);
+    } catch (error) {
+      if (error.name === "SequelizeUniqueConstraintError") {
+        return { error: "CPF ou email já cadastrado." };
+      }
+      console.log("Erro no DAO:", error);
+      return { error: "Erro ao criar pessoa:", };
+      throw error;
+    }
   }
 
   // updatePerson
@@ -28,3 +38,17 @@ class PersonDAO {
 }
 
 module.exports = new PersonDAO();
+
+/*
+curl -X POST http://localhost:3000/api/persons \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Luis",
+  "motherName": "Elane",
+  "cpfCnpj": "12345678911",
+  "birthDate": "2002-09-19",
+  "email": "luislk_@outlook.com"
+}'
+
+
+*/
