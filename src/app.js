@@ -1,6 +1,18 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const {
+    Adress,
+    User,
+    EventDate,
+    Order,
+    LegalEntity,
+    Address,
+    PaymentMethod,
+    Service,
+    Store,
+    People
+} = require("./models/Assossiations");
 const routes = require("./routes");
 
 // Express
